@@ -1,0 +1,2905 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Tools for Child Advocacy Education - Complete Resource Guide</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #051c38;
+            --secondary: #0b828a;
+            --accent: #FFE66D;
+            --bg: #FFF9F0;
+            --text: #2C3E50;
+            --text-light: #6C7A89;
+            --card-bg: #FFFFFF;
+            --shadow: rgba(0, 0, 0, 0.1);
+            --border: #E8E8E8;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        #canvas-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.3;
+        }
+
+        /* Header */
+        header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            padding: 2rem 1rem;
+            text-align: center;
+            box-shadow: 0 4px 6px var(--shadow);
+            position: relative;
+            z-index: 10;
+        }
+
+        header h1 {
+            font-size: clamp(1.5rem, 4vw, 2.5rem);
+            margin-bottom: 0.5rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        header p {
+            font-size: clamp(0.9rem, 2vw, 1.1rem);
+            opacity: 0.95;
+        }
+
+        /* Navigation */
+        nav {
+            background: white;
+            box-shadow: 0 2px 8px var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 3px solid var(--secondary);
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0.5rem 1rem;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .nav-btn {
+            background: transparent;
+            border: 2px solid var(--secondary);
+            color: var(--secondary);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.3s;
+            font-weight: 600;
+        }
+
+        .nav-btn:hover, .nav-btn.active {
+            background: var(--secondary);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px var(--shadow);
+        }
+
+        /* Controls */
+        .controls {
+            background: white;
+            padding: 1.5rem;
+            margin: 2rem auto;
+            max-width: 1400px;
+            border-radius: 15px;
+            box-shadow: 0 4px 12px var(--shadow);
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .search-box {
+            flex: 1;
+            min-width: 250px;
+            position: relative;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 0.8rem 1rem 0.8rem 2.5rem;
+            border: 2px solid var(--border);
+            border-radius: 25px;
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+
+        .search-box input:focus {
+            outline: none;
+            border-color: var(--secondary);
+            box-shadow: 0 0 0 3px rgba(78, 205, 196, 0.1);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-light);
+        }
+
+        .filter-group {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 0.6rem 1.2rem;
+            border: 2px solid var(--primary);
+            background: transparent;
+            color: var(--primary);
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .filter-btn:hover, .filter-btn.active {
+            background: var(--primary);
+            color: white;
+            transform: scale(1.05);
+        }
+
+        /* Container */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+
+        /* Section */
+        .section {
+            background: white;
+            margin: 2rem 0;
+            border-radius: 15px;
+            box-shadow: 0 4px 12px var(--shadow);
+            overflow: hidden;
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .section-header {
+            background: linear-gradient(135deg, var(--secondary) 0%, var(--primary) 100%);
+            color: white;
+            padding: 1.5rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s;
+        }
+
+        .section-header:hover {
+            filter: brightness(1.1);
+        }
+
+        .section-header h2 {
+            font-size: clamp(1.3rem, 3vw, 1.8rem);
+        }
+
+        .toggle-icon {
+            font-size: 1.5rem;
+            transition: transform 0.3s;
+        }
+
+        .section-header.collapsed .toggle-icon {
+            transform: rotate(-90deg);
+        }
+
+        .section-content {
+            padding: 2rem;
+            max-height: 5000px;
+            overflow: hidden;
+            transition: max-height 0.5s ease, padding 0.5s ease;
+        }
+
+        .section-content.collapsed {
+            max-height: 0;
+            padding: 0 2rem;
+        }
+
+        /* Cards */
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border: 2px solid var(--border);
+            border-radius: 12px;
+            padding: 1.5rem;
+            transition: all 0.3s;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .card:hover {
+            border-color: var(--secondary);
+            box-shadow: 0 8px 20px var(--shadow);
+            transform: translateY(-5px);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            margin-bottom: 1rem;
+        }
+
+        .card-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text);
+            flex: 1;
+        }
+
+        .card-badge {
+            background: var(--accent);
+            color: var(--text);
+            padding: 0.3rem 0.8rem;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+
+        .card-description {
+            color: var(--text-light);
+            font-size: 0.95rem;
+            margin-bottom: 1rem;
+        }
+
+        .card-actions {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: 600;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #E85555;
+            transform: scale(1.05);
+        }
+
+        .btn-secondary {
+            background: var(--secondary);
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background: #3DB8B0;
+            transform: scale(1.05);
+        }
+
+        .btn-ghost {
+            background: transparent;
+            border: 2px solid var(--border);
+            color: var(--text);
+        }
+
+        .btn-ghost:hover {
+            border-color: var(--secondary);
+            color: var(--secondary);
+        }
+
+        /* Prompt Display */
+        .prompt-box {
+            background: #F8F9FA;
+            border-left: 4px solid var(--secondary);
+            padding: 1rem;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            white-space: pre-wrap;
+            margin: 1rem 0;
+            display: none;
+            position: relative;
+        }
+
+        .prompt-box.show {
+            display: block;
+            animation: slideDown 0.3s ease;
+        }
+
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .copy-btn {
+            position: absolute;
+            top: 0.5rem;
+            right: 0.5rem;
+            padding: 0.5rem 1rem;
+            background: var(--secondary);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .copy-btn:hover {
+            background: #3DB8B0;
+        }
+
+        .copy-btn.copied {
+            background: #51CF66;
+        }
+
+        /* Decision Tree */
+        .tree-node {
+            background: white;
+            border: 2px solid var(--secondary);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 1rem auto;
+            max-width: 600px;
+            text-align: center;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .tree-question {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            color: var(--text);
+        }
+
+        .tree-options {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .tree-option {
+            padding: 1rem;
+            background: var(--bg);
+            border: 2px solid var(--border);
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 600;
+        }
+
+        .tree-option:hover {
+            border-color: var(--secondary);
+            background: white;
+            transform: translateX(5px);
+        }
+
+        .tree-result {
+            background: linear-gradient(135deg, var(--secondary) 0%, var(--primary) 100%);
+            color: white;
+            padding: 2rem;
+            border-radius: 12px;
+            margin-top: 1rem;
+        }
+
+        .tree-result h3 {
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+
+        /* Quick Reference */
+        .quick-ref {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .quick-ref-item {
+            background: white;
+            border-left: 4px solid var(--primary);
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px var(--shadow);
+        }
+
+        .quick-ref-item h4 {
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+
+        .quick-ref-item p {
+            color: var(--text-light);
+            font-size: 0.95rem;
+        }
+
+        /* Tool Comparison */
+        .tool-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+            overflow-x: auto;
+            display: block;
+        }
+
+        .tool-table table {
+            width: 100%;
+            min-width: 600px;
+        }
+
+        .tool-table th,
+        .tool-table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .tool-table th {
+            background: var(--secondary);
+            color: white;
+            font-weight: 600;
+        }
+
+        .tool-table tr:hover {
+            background: var(--bg);
+        }
+
+        /* Lists */
+        .checklist {
+            list-style: none;
+            padding: 0;
+        }
+
+        .checklist li {
+            padding: 0.5rem 0;
+            padding-left: 2rem;
+            position: relative;
+        }
+
+        .checklist li::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: var(--secondary);
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        .warning-box {
+            background: #FFF3CD;
+            border-left: 4px solid #FFC107;
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+        }
+
+        .warning-box strong {
+            color: #856404;
+        }
+
+        .success-box {
+            background: #D4EDDA;
+            border-left: 4px solid #28A745;
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+        }
+
+        .info-box {
+            background: #D1ECF1;
+            border-left: 4px solid #17A2B8;
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+        }
+
+        /* Bookmarks */
+        .bookmark-icon {
+            cursor: pointer;
+            font-size: 1.5rem;
+            color: var(--text-light);
+            transition: all 0.3s;
+        }
+
+        .bookmark-icon:hover,
+        .bookmark-icon.bookmarked {
+            color: var(--accent);
+            transform: scale(1.2);
+        }
+
+        /* Print Styles */
+        @media print {
+            body {
+                background: white;
+            }
+            #canvas-container,
+            nav,
+            .controls,
+            .card-actions,
+            .btn {
+                display: none !important;
+            }
+            .section {
+                page-break-inside: avoid;
+                box-shadow: none;
+            }
+            .section-content {
+                max-height: none !important;
+                padding: 1rem !important;
+            }
+            .section-header {
+                background: var(--text) !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .controls {
+                flex-direction: column;
+            }
+            .filter-group {
+                width: 100%;
+                justify-content: center;
+            }
+            .card-grid {
+                grid-template-columns: 1fr;
+            }
+            .nav-container {
+                flex-direction: column;
+            }
+        }
+
+        /* Animations */
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .loading {
+            animation: pulse 1.5s infinite;
+        }
+
+        /* Tooltip */
+        .tooltip {
+            position: relative;
+            display: inline-block;
+        }
+
+        .tooltip .tooltiptext {
+            visibility: hidden;
+            background-color: var(--text);
+            color: white;
+            text-align: center;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            position: absolute;
+            z-index: 1;
+            bottom: 125%;
+            left: 50%;
+            transform: translateX(-50%);
+            white-space: nowrap;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .tooltip:hover .tooltiptext {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        /* Hero Section */
+        .hero {
+            text-align: center;
+            padding: 3rem 1rem;
+            background: linear-gradient(135deg, rgba(255,107,107,0.1) 0%, rgba(78,205,196,0.1) 100%);
+            border-radius: 15px;
+            margin: 2rem 0;
+        }
+
+        .hero h2 {
+            font-size: clamp(1.8rem, 4vw, 2.5rem);
+            margin-bottom: 1rem;
+            color: var(--text);
+        }
+
+        .hero p {
+            font-size: clamp(1rem, 2vw, 1.2rem);
+            color: var(--text-light);
+            max-width: 800px;
+            margin: 0 auto 2rem;
+        }
+
+        .hero-stats {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+            margin-top: 2rem;
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: var(--primary);
+        }
+
+        .stat-label {
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+    <div id="canvas-container"></div>
+
+    <header>
+        <h1>🤝 AI Tools for Child Advocacy Education</h1>
+        <p>Practical Applications for CAST Faculty & Practitioners</p>
+    </header>
+
+    <nav>
+        <div class="nav-container">
+            <button class="nav-btn active" onclick="scrollToSection('overview')">Overview</button>
+            <button class="nav-btn" onclick="scrollToSection('tools')">AI Tools</button>
+            <button class="nav-btn" onclick="scrollToSection('quickstart')">Quick Start</button>
+            <button class="nav-btn" onclick="scrollToSection('prompts')">Prompt Library</button>
+            <button class="nav-btn" onclick="scrollToSection('ethics')">Ethics</button>
+            <button class="nav-btn" onclick="scrollToSection('decision-tree')">Decision Tree</button>
+            <button class="nav-btn" onclick="scrollToSection('reference')">Quick Reference</button>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="hero">
+            <h2>Empower Your Work with AI</h2>
+            <p>AI augments your expertise in child advocacy—it never replaces your trauma-informed judgment, ethical decision-making, or the human connection that helps children heal.</p>
+            <div class="hero-stats">
+                <div class="stat">
+                    <div class="stat-number">5</div>
+                    <div class="stat-label">Essential AI Tools</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number">36</div>
+                    <div class="stat-label">Ready-to-Use Prompts</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number">117</div>
+                    <div class="stat-label">CAST Programs Nationwide</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="controls">
+            <div class="search-box">
+                <span class="search-icon">🔍</span>
+                <input type="text" id="searchInput" placeholder="Search prompts, tools, or guidance...">
+            </div>
+            <div class="filter-group">
+                <button class="filter-btn active" onclick="filterByRole('all')">All Roles</button>
+                <button class="filter-btn" onclick="filterByRole('practitioner')">Practitioners</button>
+                <button class="filter-btn" onclick="filterByRole('faculty')">Faculty</button>
+                <button class="filter-btn" onclick="filterByRole('admin')">Administrators</button>
+            </div>
+        </div>
+
+        <!-- OVERVIEW SECTION -->
+        <div class="section" id="overview">
+            <div class="section-header" onclick="toggleSection(this)">
+                <h2>📚 Workshop Overview</h2>
+                <span class="toggle-icon">▼</span>
+            </div>
+            <div class="section-content">
+                <h3>What AI Can Do for Your Work</h3>
+                
+                <div class="card-grid">
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-title">For Practitioners</div>
+                            <div class="card-badge">CAC Staff</div>
+                        </div>
+                        <ul class="checklist">
+                            <li>Draft training protocols and education materials</li>
+                            <li>Generate fictional case scenarios for development</li>
+                            <li>Create presentation templates</li>
+                            <li>Synthesize research for evidence-based practice</li>
+                        </ul>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-title">For Faculty</div>
+                            <div class="card-badge">Educators</div>
+                        </div>
+                        <ul class="checklist">
+                            <li>Develop syllabi and course outlines</li>
+                            <li>Design assessments and rubrics</li>
+                            <li>Find relevant research and statistics</li>
+                            <li>Create engagement activities</li>
+                        </ul>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-title">For Leaders</div>
+                            <div class="card-badge">Administrators</div>
+                        </div>
+                        <ul class="checklist">
+                            <li>Write grant applications and impact reports</li>
+                            <li>Analyze program data for stakeholders</li>
+                            <li>Develop strategic plans and policies</li>
+                            <li>Create board presentations</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="warning-box">
+                    <strong>⚠️ What AI Cannot Do:</strong> Replace trauma-informed clinical judgment, handle confidential case information, verify accuracy of legal requirements automatically, make ethical decisions about child welfare cases, or conduct actual forensic interviews.
+                </div>
+
+                <h3 style="margin-top: 2rem;">Ethical Framework</h3>
+                
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-top: 1rem;">
+                    <div class="warning-box" style="background: #FFE5E5; border-color: #DC3545;">
+                        <h4 style="color: #DC3545; margin-bottom: 0.5rem;">🚫 RED LINES - Never Use AI For:</h4>
+                        <ul style="margin-left: 1.5rem; color: #721C24;">
+                            <li>Real victim/client identifying information</li>
+                            <li>Actual case documentation or forensic interview notes</li>
+                            <li>Confidential MDT case discussions</li>
+                            <li>Real court testimony preparation</li>
+                        </ul>
+                    </div>
+
+                    <div class="success-box">
+                        <h4 style="color: #28A745; margin-bottom: 0.5rem;">✅ GREEN ZONES - Appropriate Use:</h4>
+                        <ul style="margin-left: 1.5rem; color: #155724;">
+                            <li>Fictional case scenarios for training</li>
+                            <li>Template development</li>
+                            <li>Literature reviews (with verification)</li>
+                            <li>Administrative documents</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="info-box" style="margin-top: 1.5rem;">
+                    <strong>🔑 Golden Rule:</strong> If it involves real children, real cases, or confidential information, AI stays out.
+                </div>
+            </div>
+        </div>
+
+        <!-- AI TOOLS SECTION -->
+        <div class="section" id="tools">
+            <div class="section-header" onclick="toggleSection(this)">
+                <h2>🛠️ Essential AI Tools</h2>
+                <span class="toggle-icon">▼</span>
+            </div>
+            <div class="section-content">
+                <div class="tool-table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Tool</th>
+                                <th>Best For</th>
+                                <th>Access</th>
+                                <th>Free Tier</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>ChatGPT</strong></td>
+                                <td>General drafting, training materials, quick content</td>
+                                <td>chat.openai.com</td>
+                                <td>✅ Unlimited</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Perplexity</strong></td>
+                                <td>Research, grant searches, finding sources</td>
+                                <td>perplexity.ai</td>
+                                <td>⚠️ 5 searches/day</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Google NotebookLM</strong></td>
+                                <td>Document analysis, synthesis, report writing</td>
+                                <td>notebooklm.google.com</td>
+                                <td>✅ Unlimited</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Claude</strong></td>
+                                <td>Complex scenarios, detailed content, long documents</td>
+                                <td>claude.ai</td>
+                                <td>✅ Free tier available</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Google Gemini</strong></td>
+                                <td>Data analysis, quick summaries, Google integration</td>
+                                <td>gemini.google.com</td>
+                                <td>✅ Free with Google</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h3 style="margin-top: 2rem;">Tool Demonstrations</h3>
+
+                <div class="card-grid">
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-title">Demo 1: ChatGPT</div>
+                            <div class="card-badge">8 min</div>
+                        </div>
+                        <div class="card-description">
+                            <strong>Use Case:</strong> Creating course syllabi, training outlines, workshop plans
+                        </div>
+                        <button class="btn btn-primary" onclick="showPrompt('demo1')">View Example Prompt</button>
+                        <div id="demo1" class="prompt-box">
+                            <button class="copy-btn" onclick="copyPrompt('demo1')">Copy</button>
+Create an 8-week syllabus outline for undergraduate course "Professional & 
+Systems Response to Abuse and Neglect" covering:
+- Trauma-informed communication with child victims
+- Safety and risk assessment protocols
+- Multidisciplinary team (MDT) collaboration
+- Cultural humility and addressing racial disparities
+- Testifying in court procedures
+- Evidence-based intervention practices
+- Mandated reporting requirements
+
+Include: weekly learning objectives, assignment ideas aligned with experiential 
+learning, and discussion prompts that promote critical thinking. Format for 
+both in-person and online delivery options.
+                        </div>
+                        <p style="margin-top: 0.5rem; color: var(--text-light); font-size: 0.9rem;">⏱️ Time Saved: 15 minutes vs. 4 hours</p>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-title">Demo 2: Perplexity</div>
+                            <div class="card-badge">8 min</div>
+                        </div>
+                        <div class="card-description">
+                            <strong>Use Case:</strong> Finding funding, locating current statistics, verifying information
+                        </div>
+                        <button class="btn btn-primary" onclick="showPrompt('demo2')">View Example Prompt</button>
+                        <div id="demo2" class="prompt-box">
+                            <button class="copy-btn" onclick="copyPrompt('demo2')">Copy</button>
+Find federal and foundation grants available in 2025 for child maltreatment 
+prevention and CAC workforce development programs, specifically curriculum 
+enhancement and trauma-informed training initiatives
+                        </div>
+                        <p style="margin-top: 0.5rem; color: var(--text-light); font-size: 0.9rem;">✨ Provides cited sources you can verify</p>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-title">Demo 3: NotebookLM</div>
+                            <div class="card-badge">10 min</div>
+                        </div>
+                        <div class="card-description">
+                            <strong>Use Case:</strong> Analyzing CAST Impact Reports, synthesizing research articles
+                        </div>
+                        <button class="btn btn-primary" onclick="showPrompt('demo3')">View Example Prompt</button>
+                        <div id="demo3" class="prompt-box">
+                            <button class="copy-btn" onclick="copyPrompt('demo3')">Copy</button>
+Based on these documents, what are the key trends in CAST program growth 
+and experiential learning adoption? What evidence-based recommendations 
+would you make for expanding simulation-based training in child advocacy 
+programs?
+                        </div>
+                        <p style="margin-top: 0.5rem; color: var(--text-light); font-size: 0.9rem;">📚 Upload your reading list; get synthesis in minutes</p>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-title">Demo 4: Claude</div>
+                            <div class="card-badge">10 min</div>
+                        </div>
+                        <div class="card-description">
+                            <strong>Use Case:</strong> Creating case studies, designing rubrics, scenario-based training
+                        </div>
+                        <button class="btn btn-primary" onclick="showPrompt('demo4')">View Example Prompt</button>
+                        <div id="demo4" class="prompt-box">
+                            <button class="copy-btn" onclick="copyPrompt('demo4')">Copy</button>
+Design a trauma-informed case study assessment for practitioners learning 
+about child physical abuse investigation. 
+
+Requirements:
+- Child: 6-year-old presenting with bruising patterns
+- Include family cultural considerations (immigrant family, language barriers)
+- Requires demonstration of: MDT collaboration, trauma-informed interviewing, 
+  mandated reporting, safety planning
+- Must avoid re-traumatization approaches
+
+Provide:
+1. Detailed case scenario (fictional, realistic)
+2. Assessment questions testing critical thinking
+3. Grading rubric emphasizing trauma-informed approaches and cultural humility
+4. Common mistakes to avoid
+                        </div>
+                        <p style="margin-top: 0.5rem; color: var(--text-light); font-size: 0.9rem;">🎯 Complex assessments requiring your final review</p>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-title">Demo 5: ChatGPT</div>
+                            <div class="card-badge">8 min</div>
+                        </div>
+                        <div class="card-description">
+                            <strong>Use Case:</strong> Interactive training exercises, classroom activities
+                        </div>
+                        <button class="btn btn-primary" onclick="showPrompt('demo5')">View Example Prompt</button>
+                        <div id="demo5" class="prompt-box">
+                            <button class="copy-btn" onclick="copyPrompt('demo5')">Copy</button>
+Create 5 interactive training activities for teaching mandated reporting laws 
+to new CAC staff and community partners. 
+
+Requirements:
+- 15-20 minutes each
+- Work for both in-person and virtual formats
+- Address common ethical dilemmas and gray areas
+- Promote discussion about balancing child safety with family preservation
+- Include facilitator notes and materials needed
+
+Make activities engaging and appropriate for mixed professional backgrounds 
+(law enforcement, social workers, medical staff, educators).
+                        </div>
+                        <p style="margin-top: 0.5rem; color: var(--text-light); font-size: 0.9rem;">💡 Fresh engagement strategies</p>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-title">Demo 6: NotebookLM</div>
+                            <div class="card-badge">6 min</div>
+                        </div>
+                        <div class="card-description">
+                            <strong>Use Case:</strong> Annual CAST summaries, program evaluation reports
+                        </div>
+                        <button class="btn btn-primary" onclick="showPrompt('demo6')">View Example Prompt</button>
+                        <div id="demo6" class="prompt-box">
+                            <button class="copy-btn" onclick="copyPrompt('demo6')">Copy</button>
+I need to write an impact summary for our CAST program's annual report. 
+
+Data:
+- 38 students completed training
+- 82% incorporated experiential learning
+- 76% established new MDT partnerships
+- Student feedback: 94% felt "well-prepared" for fieldwork
+- 3 graduates now employed at local CACs
+
+Create a compelling narrative paragraph highlighting these outcomes and 
+connecting them to improved child welfare response in our community. 
+Write for a mixed audience of funders, university leadership, and community 
+partners.
+                        </div>
+                        <p style="margin-top: 0.5rem; color: var(--text-light); font-size: 0.9rem;">📊 Data → narrative efficiently</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- QUICK START GUIDE -->
+        <div class="section" id="quickstart">
+            <div class="section-header" onclick="toggleSection(this)">
+                <h2>🚀 Quick Start Guide by Role</h2>
+                <span class="toggle-icon">▼</span>
+            </div>
+            <div class="section-content">
+                <div class="info-box">
+                    <strong>💡 Getting Started:</strong> Choose your role below to see customized starter prompts and time-saving tips.
+                </div>
+
+                <div class="card-grid">
+                    <div class="card" data-role="practitioner">
+                        <div class="card-header">
+                            <div class="card-title">Forensic Interviewers & MDT Coordinators</div>
+                            <span class="bookmark-icon" onclick="toggleBookmark(this, 'quickstart-fi')">⭐</span>
+                        </div>
+                        <h4 style="color: var(--secondary); margin: 1rem 0 0.5rem;">Your First Task This Week:</h4>
+                        <p style="margin-bottom: 1rem;">Create a practice case scenario for training</p>
+                        
+                        <h4 style="color: var(--secondary); margin: 1rem 0 0.5rem;">Recommended Tool:</h4>
+                        <p style="margin-bottom: 1rem;">ChatGPT or Claude</p>
+
+                        <button class="btn btn-primary" onclick="showPrompt('qs-fi')">View Starter Prompt</button>
+                        <div id="qs-fi" class="prompt-box">
+                            <button class="copy-btn" onclick="copyPrompt('qs-fi')">Copy</button>
+Create a realistic practice scenario for forensic interview training:
+- Child: [age] disclosing [type of abuse]
+- Family context: [brief description]
+- Cultural considerations: [specify]
+- Training focus: [e.g., developmentally appropriate questioning, 
+  trauma-informed techniques]
+
+Include: case background, interview objectives, and discussion points 
+for debrief.
+                        </div>
+                        <p style="margin-top: 1rem; color: var(--primary); font-weight: 600;">⏱️ Time Saved: 45 minutes → 10 minutes</p>
+                    </div>
+
+                    <div class="card" data-role="practitioner">
+                        <div class="card-header">
+                            <div class="card-title">Family Advocates & Prevention Educators</div>
+                            <span class="bookmark-icon" onclick="toggleBookmark(this, 'quickstart-adv')">⭐</span>
+                        </div>
+                        <h4 style="color: var(--secondary); margin: 1rem 0 0.5rem;">Your First Task This Week:</h4>
+                        <p style="margin-bottom: 1rem;">Draft a community presentation outline</p>
+                        
+                        <h4 style="color: var(--secondary); margin: 1rem 0 0.5rem;">Recommended Tool:</h4>
+                        <p style="margin-bottom: 1rem;">ChatGPT</p>
+
+                        <button class="btn btn-primary" onclick="showPrompt('qs-adv')">View Starter Prompt</button>
+                        <div id="qs-adv" class="prompt-box">
+                            <button class="copy-btn" onclick="copyPrompt('qs-adv')">Copy</button>
+Create a [length] presentation outline for [audience] on [topic].
+
+Include:
+- Key talking points
+- Interactive activities
+- Age-appropriate/audience-appropriate language
+- Local resource handout template
+- Discussion questions
+
+Tone: [empowering/informative/accessible]
+                        </div>
+                        <p style="margin-top: 1rem; color: var(--primary); font-weight: 600;">⏱️ Time Saved: 2 hours → 15 minutes</p>
+                    </div>
+
+                    <div class="card" data-role="faculty">
+                        <div class="card-header">
+                            <div class="card-title">Faculty & Educators</div>
+                            <span class="bookmark-icon" onclick="toggleBookmark(this, 'quickstart-fac')">⭐</span>
+                        </div>
+                        <h4 style="color: var(--secondary); margin: 1rem 0 0.5rem;">Your First Task This Week:</h4>
+                        <p style="margin-bottom: 1rem;">Draft course syllabus or lesson plan</p>
+                        
+                        <h4 style="color: var(--secondary); margin: 1rem 0 0.5rem;">Recommended Tool:</h4>
+                        <p style="margin-bottom: 1rem;">ChatGPT for structure, NotebookLM for research</p>
+
+                        <button class="btn btn-primary" onclick="showPrompt('qs-fac')">View Starter Prompt</button>
+                        <div id="qs-fac" class="prompt-box">
+                            <button class="copy-btn" onclick="copyPrompt('qs-fac')">Copy</button>
+Create a syllabus outline for [duration] course on [topic] for 
+[undergraduate/graduate] students.
+
+Include:
+- Weekly learning objectives aligned with [specific standards if applicable]
+- Assignment ideas emphasizing experiential learning
+- Assessment methods
+- Required readings framework
+- Grading rubric focused on [specific competencies]
+                        </div>
+                        <p style="margin-top: 1rem; color: var(--primary); font-weight: 600;">⏱️ Time Saved: 4 hours → 30 minutes</p>
+                    </div>
+
+                    <div class="card" data-role="admin">
+                        <div class="card-header">
+                            <div class="card-title">CAC Directors & Administrators</div>
+                            <span class="bookmark-icon" onclick="toggleBookmark(this, 'quickstart-dir')">⭐</span>
+                        </div>
+                        <h4 style="color: var(--secondary); margin: 1rem 0 0.5rem;">Your First Task This Week:</h4>
+                        <p style="margin-bottom: 1rem;">Start a grant application or impact report</p>
+                        
+                        <h4 style="color: var(--secondary); margin: 1rem 0 0.5rem;">Recommended Tool:</h4>
+                        <p style="margin-bottom: 1rem;">Perplexity (grant search), NotebookLM (reports)</p>
+
+                        <button class="btn btn-primary" onclick="showPrompt('qs-dir')">View Starter Prompt</button>
+                        <div id="qs-dir" class="prompt-box">
+                            <button class="copy-btn" onclick="copyPrompt('qs-dir')">Copy</button>
+Find federal and foundation grants available in 2025 for [your specific need: 
+CAC operations, training programs, prevention initiatives, etc.]
+
+Include: funding amounts, deadlines, eligibility requirements, and focus areas.
+                        </div>
+                        <p style="margin-top: 1rem; color: var(--primary); font-weight: 600;">⏱️ Time Saved: 3 hours → 20 minutes</p>
+                    </div>
+
+                    <div class="card" data-role="practitioner">
+                        <div class="card-header">
+                            <div class="card-title">Law Enforcement & Legal Professionals</div>
+                            <span class="bookmark-icon" onclick="toggleBookmark(this, 'quickstart-law')">⭐</span>
+                        </div>
+                        <h4 style="color: var(--secondary); margin: 1rem 0 0.5rem;">Your First Task This Week:</h4>
+                        <p style="margin-bottom: 1rem;">Create training protocol documentation</p>
+                        
+                        <h4 style="color: var(--secondary); margin: 1rem 0 0.5rem;">Recommended Tool:</h4>
+                        <p style="margin-bottom: 1rem;">ChatGPT or Claude</p>
+
+                        <button class="btn btn-primary" onclick="showPrompt('qs-law')">View Starter Prompt</button>
+                        <div id="qs-law" class="prompt-box">
+                            <button class="copy-btn" onclick="copyPrompt('qs-law')">Copy</button>
+Create a [protocol/guide/checklist] for [specific procedure: responding to 
+child abuse calls, preparing for court testimony, conducting joint investigations]
+
+Include:
+- Step-by-step procedures
+- Critical considerations
+- Common pitfalls to avoid
+- Documentation requirements
+- Best practices for [specific context]
+
+Format: [checklist/narrative/flowchart description]
+                        </div>
+                        <p style="margin-top: 1rem; color: var(--primary); font-weight: 600;">⏱️ Time Saved: 90 minutes → 15 minutes</p>
+                    </div>
+
+                    <div class="card" data-role="practitioner">
+                        <div class="card-header">
+                            <div class="card-title">Pastoral Care & Faith Leaders</div>
+                            <span class="bookmark-icon" onclick="toggleBookmark(this, 'quickstart-faith')">⭐</span>
+                        </div>
+                        <h4 style="color: var(--secondary); margin: 1rem 0 0.5rem;">Your First Task This Week:</h4>
+                        <p style="margin-bottom: 1rem;">Develop congregation education materials</p>
+                        
+                        <h4 style="color: var(--secondary); margin: 1rem 0 0.5rem;">Recommended Tool:</h4>
+                        <p style="margin-bottom: 1rem;">ChatGPT</p>
+
+                        <button class="btn btn-primary" onclick="showPrompt('qs-faith')">View Starter Prompt</button>
+                        <div id="qs-faith" class="prompt-box">
+                            <button class="copy-btn" onclick="copyPrompt('qs-faith')">Copy</button>
+Create [material type: presentation outline, discussion guide] for faith 
+community on [topic: recognizing abuse, supporting survivors, creating safe spaces].
+
+Include:
+- Theologically sensitive language
+- Trauma-informed approaches
+- Practical action steps for congregation members
+- Scripture/faith tradition references supporting survivor care
+- Resources for pastoral response
+
+Tone: compassionate, empowering, faith-integrated
+                        </div>
+                        <p style="margin-top: 1rem; color: var(--primary); font-weight: 600;">⏱️ Time Saved: 2 hours → 20 minutes</p>
+                    </div>
+                </div>
+
+                <h3 style="margin-top: 2rem;">Your Week 1 Action Plan</h3>
+                <div class="quick-ref">
+                    <div class="quick-ref-item">
+                        <h4>Day 1 (Today)</h4>
+                        <ul class="checklist">
+                            <li>Create account on your chosen tool</li>
+                            <li>Review the starter prompt for your role</li>
+                            <li>Identify one specific task you'll try</li>
+                        </ul>
+                    </div>
+                    <div class="quick-ref-item">
+                        <h4>Days 2-3</h4>
+                        <ul class="checklist">
+                            <li>Run your first prompt</li>
+                            <li>Review and edit the output</li>
+                            <li>Note what worked and what didn't</li>
+                        </ul>
+                    </div>
+                    <div class="quick-ref-item">
+                        <h4>Days 4-5</h4>
+                        <ul class="checklist">
+                            <li>Refine your prompt based on results</li>
+                            <li>Try the improved version</li>
+                            <li>Save successful prompts for future use</li>
+                        </ul>
+                    </div>
+                    <div class="quick-ref-item">
+                        <h4>Days 6-7</h4>
+                        <ul class="checklist">
+                            <li>Integrate one AI task into workflow</li>
+                            <li>Share your experience with a colleague</li>
+                            <li>Prepare questions for office hours</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- COMPREHENSIVE PROMPT LIBRARY -->
+        <div class="section" id="prompts">
+            <div class="section-header" onclick="toggleSection(this)">
+                <h2>📖 Complete Prompt Library (36 Prompts)</h2>
+                <span class="toggle-icon">▼</span>
+            </div>
+            <div class="section-content">
+                <div class="info-box">
+                    <strong>💡 How to Use:</strong> Copy prompts and customize the bracketed sections [like this] with your specific details. Use the filter buttons above to show only prompts for your role.
+                </div>
+
+                <h3>Section 1: For Practitioners (10 Prompts)</h3>
+                <div class="card-grid" id="practitioner-prompts">
+                    <!-- Prompt 1 -->
+                    <div class="card prompt-card" data-role="practitioner" data-tags="training protocols mdt">
+                        <div class="card-header">
+                            <div class="card-title">Prompt 1: MDT Training Protocols</div>
+                            <span class="bookmark-icon" onclick="toggleBookmark(this, 'prompt-1')">⭐</span>
+                        </div>
+                        <div class="card-description">Create comprehensive training for MDT members</div>
+                        <div class="card-badge">ChatGPT/Claude</div>
+                        <button class="btn btn-primary" onclick="showPrompt('p1')">View Prompt</button>
+                        <div id="p1" class="prompt-box">
+                            <button class="copy-btn" onclick="copyPrompt('p1')">Copy</button>
+Create a comprehensive training protocol for [specific topic: new MDT members, 
+trauma-informed interviewing, cultural competency in child advocacy].
+
+Target audience: [law enforcement/medical professionals/educators/mixed MDT]
+Duration: [2 hours/half-day/full-day]
+
+Include:
+- Learning objectives (measurable)
+- Detailed agenda with time allocations
+- Core content outline
+- Interactive activities (at least 3)
+- Case examples or scenarios (fictional)
+- Assessment method to evaluate understanding
+- Resource handout suggestions
+- Follow-up activities or homework
+
+Special considerations: [any specific requirements for your agency]
+                        </div>
+                    </div>
+
+                    <!-- Prompt 2 -->
+                    <div class="card prompt-card" data-role="practitioner" data-tags="case scenarios training">
+                        <div class="card-header">
+                            <div class="card-title">Prompt 2: Practice Case Scenarios</div>
+                            <span class="bookmark-icon" onclick="toggleBookmark(this, 'prompt-2')">⭐</span>
+                        </div>
+                        <div class="card-description">Develop realistic scenarios for skill development</div>
+                        <div class="card-badge">Claude</div>
+                        <button class="btn btn-primary" onclick="showPrompt('p2')">View Prompt</button>
+                        <div id="p2" class="prompt-box">
+                            <button class="copy-btn" onclick="copyPrompt('p2')">Copy</button>
+Create [number] realistic practice scenarios for [forensic interviewer training/
+MDT case review practice/advocate skill development].
+
+Each scenario should include:
+- Child demographics: age, developmental level
+- Abuse allegation: [type and severity]
+- Family context: structure, stressors, protective factors
+- Cultural considerations: [specify or request diversity]
+- Complicating factors: [e.g., disability, language barriers]
+- Disclosure details: how, when, to whom
+
+For each scenario, provide:
+1. Full case background
+2. Key interview/intervention considerations
+3. Potential challenges
+4. Discussion questions for debrief
+5. Learning objectives addressed
+
+Make scenarios diverse and trauma-informed.
+                        </div>
+                    </div>
+
+                    <!-- Prompt 3 -->
+                    <div class="card prompt-card" data-role="practitioner" data-tags="community education">
+                        <div class="card-header">
+                            <div class="card-title">Prompt 3: Community Training Materials</div>
+                            <span class="bookmark-icon" onclick="toggleBookmark(this, 'prompt-3')">⭐</span>
+                        </div>
+                        <div class="card-description">Educational content for community partners</div>
+                        <div class="card-badge">ChatGPT</div>
+                        <button class="btn btn-primary" onclick="showPrompt('p3')">View Prompt</button>
+                        <div id="p3" class="prompt-box">
+                            <button class="copy-btn" onclick="copyPrompt('p3')">Copy</button>
+Develop a [60/90/120-minute] community training for [specific audience: 
+teachers, pediatricians, youth workers, faith leaders] on "[topic]."
+
+Include:
+- Opening hook (engaging story or statistic)
+- 4-5 key learning points
+- Local statistics template (for me to fill in)
+- Warning signs handout
+- Response protocol (what to do if...)
+- Resources specific to [your region]
+- Interactive elements
+- Q&A anticipation
+
+Tone: Educational, empowering (not fear-based), accessible
+Avoid: Jargon, graphic descriptions, overwhelming information
+                        </div>
+                    </div>
+
+                    <!-- Prompt 4 -->
+                    <div class="card prompt-card" data-role="practitioner" data-tags="debrief training">
+                        <div class="card-header">
+                            <div class="card-title">Prompt 4: Debrief Discussion Guides</div>
+                            <span class="bookmark-icon" onclick="toggleBookmark(this, 'prompt-4')">⭐</span>
+                        </div>
+                        <div class="card-description">Structured reflection after training exercises</div>
+                        <div class="card-badge">ChatGPT</div>
+                        <button class="btn btn-primary" onclick="showPrompt('p4')">View Prompt</button>
+                        <div id="p4" class="prompt-box">
+                            <button class="copy-btn" onclick="copyPrompt('p4')">Copy</button>
+Create a structured debrief guide for forensic interview training using 
+this scenario: [paste scenario or describe briefly]
+
+Include:
+- Open-ended reflection questions
+- Specific technique discussion points
+- Trauma-informed practice considerations
+- Cultural competency reflection
+- Alternative approaches to consider
+- Key learning points summary
+- Self-assessment questions for trainees
+
+Format as facilitator guide with timing.
+                        </div>
+                    </div>
+
+                    <!-- Prompt 5 -->
+                    <div class="card prompt-card" data-role="practitioner" data-tags="mock interviews">
+                        <div class="card-header">
+                            <div class="card-title">Prompt 5: Mock Interview Scenarios</div>
+                            <span class="bookmark-icon" onclick="toggleBookmark(this, 'prompt-5')">⭐</span>
+                        </div>
+                        <div class="card-description">Detailed role-play scenarios for practice</div>
+                        <div class="card-badge">Claude</div>
+                        <button class="btn btn-primary" onclick="showPrompt('p5')">View Prompt</button>
+                        <div id="p5" class="prompt-box">
+                            <button class="copy-btn" onclick="copyPrompt('p5')">Copy</button>
+Create a detailed mock forensic interview scenario for [intern/new 
+interviewer/experienced interviewer refresher training].
+
+Provide:
+1. Complete case background (2-3 paragraphs)
+2. Child profile: age, developmental stage, communication style
+3. Disclosure information: initial outcry details
+4. Role-play instructions for person playing the child
+5. Suggested child responses to different question types
+6. Red flags and interview challenges to incorporate
+7. Evaluation criteria for assessing performance
+
+Focus on: [specific skill: rapport building, developmental 
+appropriateness, non-leading questions]
+                        </div>
+                    </div>
+
+                    <!-- Prompt 6 -->
+                    <div class="card prompt-card" data-role="practitioner" data-tags="parent education">
+                        <div class="card-header">
+                            <div class="card-title">Prompt 6: Parent Education Materials</div>
+                            <span class="bookmark-icon" onclick="toggleBookmark(this, 'prompt-6')">⭐</span>
+                        </div>
+                        <div class="card-description">Workshop content for caregivers</div>
+                        <div class="card-badge">ChatGPT</div>
+                        <button class="btn btn-primary" onclick="showPrompt('p6')">View Prompt</button>
+                        <div id="p6" class="prompt-box">
+                            <button class="copy-btn" onclick="copyPrompt('p6')">Copy</button>
+Create materials for a parent workshop on "[topic: internet safety, 
+healthy sexuality development, preventing child sexual abuse]" for 
+parents of [age group] children.
+
+Develop:
+1. 45-minute presentation outline
+2. Key messages (5-7 main points)
+3. Age-appropriate prevention strategies
+4. "Conversation starters" handout
+5. Warning signs reference sheet
+6. Local resources list (template)
+7. FAQ document
+
+Tone: Empowering, practical, non-judgmental, culturally inclusive
+Avoid: Shame-based messaging, fear tactics
+                        </div>
+                    </div>
+
+                    <!-- Prompt 7 -->
+                    <div class="card prompt-card" data-role="practitioner" data-tags="professional education">
+                        <div class="card-header">
+                            <div class="card-title">Prompt 7: Professional Reference Guides</div>
+                            <span class="bookmark-icon" onclick="toggleBookmark(this, 'prompt-7')">⭐</span>
+                        </div>
+                        <div class="card-description">One-page quick reference materials</div>
+                        <div class="card-badge">ChatGPT</div>
+                        <button class="btn btn-primary" onclick="showPrompt('p7')">View Prompt</button>
+                        <div id="p7" class="prompt-box">
+                            <button class="copy-btn" onclick="copyPrompt('p7')">Copy</button>
+Create a one-page professional reference guide on "[topic: mandated 
+reporting, trauma-informed response, cultural considerations, working 
+with children with disabilities]."
+
+Format:
+- Quick-reference (bullets, short paragraphs, visual organization)
+- "Key Facts" section
+- "What to Look For" section
+- "How to Respond" action steps
+- "Common Mistakes to Avoid"
+- Resources and contacts (template for me to complete)
+
+Audience: [teachers/coaches/medical staff/clergy]
+Length: Fit on one page, front and back maximum
+                        </div>
+                    </div>
+
+                    <!-- Prompt 8 -->
+                    <div class="card prompt-card" data-role="practitioner" data-tags="assessment templates">
+                        <div class="card-header">
+                            <div class="card-title">Prompt 8: Intake/Assessment Templates</div>
+                            <span class="bookmark-icon" onclick="toggleBookmark(this, 'prompt-8')">⭐</span>
+                        </div>
+                        <div class="card-description">Forms for client intake and evaluation</div>
+                        <div class="card-badge">ChatGPT</div>
+                        <button class="btn btn-primary" onclick="showPrompt('p8')">View Prompt</button>
+                        <div id="p8" class="prompt-box">
+                            <button class="copy-btn" onclick="copyPrompt('p8')">Copy</button>
+Design a [intake form/assessment template/screening tool] for 
+[specific purpose: initial CAC contact, caregiver support assessment, 
+safety planning, referral coordination].
+
+Include sections for:
+- [List specific information categories you need]
+- Trauma-informed language considerations
+- Cultural background questions (respectful, relevant)
+- Safety concerns assessment
+- Service needs identification
+- Consent/release information
+
+Format: [fillable form/interview guide/checklist]
+Ensure: Trauma-informed, culturally sensitive language
+
+Note: I will review legal language and adapt to agency policies.
+                        </div>
+                    </div>
+
+                    <!-- Prompt 9 -->
+                    <div class="card prompt-card" data-role="practitioner" data-tags="protocols procedures">
+                        <div class="card-header">
+                            <div class="card-title">Prompt 9: Standard Operating Procedures</div>
+                            <span class="bookmark-icon" onclick="toggleBookmark(this, 'prompt-9')">⭐</span>
+                        </div>
+                        <div class="card-description">Documentation of agency protocols</div>
+                        <div class="card-badge">Claude</div>
+                        <button class="btn btn-primary" onclick="showPrompt('p9')">View Prompt</button>
+                        <div id="p9" class="prompt-box">
+                            <button class="copy-btn" onclick="copyPrompt('p9')">Copy</button>
+Create a Standard Operating Procedure (SOP) document for 
+"[specific process: coordinating MDT response, scheduling forensic 
+interviews, managing complex cases, caregiver notification]."
+
+Include:
+- Purpose and scope
+- Roles and responsibilities (who does what)
+- Step-by-step procedures with decision points
+- Required documentation at each stage
+- Timeline expectations
+- Quality assurance checkpoints
+- Escalation procedures
+- Forms and templates needed (list)
+
+Format: Clear, sequential, suitable for new staff training
+Audience: [CAC staff/MDT members/specific role]
+                        </div>
+                    </div>
+
+                    <!-- Prompt 10 -->
+                    <div class="card prompt-card" data-role="practitioner" data-tags="resource guides families">
+                        <div class="card-header">
+                            <div class="card-title">Prompt 10: Family Resource Guides</div>
+                            <span class="bookmark-icon" onclick="toggleBookmark(this, 'prompt-10')">⭐</span>
+                        </div>
+                        <div class="card-description">Support materials for caregivers and families</div>
+                        <div class="card-badge">ChatGPT</div>
+                        <button class="btn btn-primary" onclick="showPrompt('p10')">View Prompt</button>
+                        <div id="p10" class="prompt-box">
+                            <button class="copy-btn" onclick="copyPrompt('p10')">Copy</button>
+Create a comprehensive resource guide for [non-offending caregivers/
+families of child victims/specific population] titled "[title]."
+
+Include:
+- What to expect: [therapy process/investigation/court]
+- How to support your child: practical strategies
+- Common reactions in children after [trauma type]
+- Self-care for caregivers
+- When to seek additional help
+- Local resources: [therapy, support groups, legal aid, financial]
+  (template for me to add specifics)
+- FAQs (10-15 common questions)
+- Crisis contacts
+
+Tone: Supportive, clear, empowering, culturally sensitive
+Format: 4-6 pages, readable by diverse education levels
+                        </div>
+                    </div>
+                </div>
+
+                <h3 style="margin-top: 3rem;">Section 2: For Faculty & Educators (8 Prompts)</h3>
+                <div class="card-grid" id="faculty-prompts">
+                    <!-- Prompt 11 -->
+                    <div class="card prompt-card" data-role="faculty" data-tags="syllabus curriculum">
+                        <div class="card-header">
+                            <div class="card-title">Prompt 11: Course Syllabus Development</div>
+                            <span class="bookmark-icon" onclick="toggleBookmark(this, 'prompt-11')">⭐</span>
+                        </div>
+                        <div class="card-description">Comprehensive course planning and structure</div>
+                        <div class="card-badge">ChatGPT</div>
+                        <button class="btn btn-primary" onclick="showPrompt('p11')">View Prompt</button>
+                        <div id="p11" class="prompt-box">
+                            <button class="copy-btn" onclick="copyPrompt('p11')">Copy</button>
+Create a detailed syllabus for [course number and title] - an 
+[undergraduate/graduate] [semester/quarter/8-week] course in [program].
+
+Course focus: [brief description]
+
+Include:
+- Course description (2-3 paragraphs for catalog)
+- Learning outcomes (5-7, measurable, aligned with standards)
+- Weekly schedule: topics, readings, assignments
+- Assignment descriptions
+- Grading breakdown with rubrics
+- Required and recommended texts
+- Course policies
+- Accessibility and inclusivity statement
+- Trauma-informed teaching considerations
+- CAST program integration points (if applicable)
+
+Special emphasis: [experiential learning/research/practice skills]
+                        </div>
+                    </div>
+
+                    <!-- Prompt 12 -->
+                    <div class="card prompt-card" data-role="faculty" data-tags="lesson plans">
+                        <div class="card-header">
+                            <div class="card-title">Prompt 12: Lesson Plan Creation</div>
+                            <span class="bookmark-icon" onclick="toggleBookmark(this, 'prompt-12')">⭐</span>
+                        </div>
+                        <div class="card-description">Detailed individual class session planning</div>
+                        <div class="card-badge">ChatGPT</div>
+                        <button class="btn btn-primary" onclick="showPrompt('p12')">View Prompt</button>
+                        <div id="p12" class="prompt-box">
+                            <button class="copy-btn" onclick="copyPrompt('p12')">Copy</button>
+Develop a detailed lesson plan for [duration]-minute class session 
+on "[topic]" for [undergraduate/graduate] students in [course name].
+
+Include:
+- Learning objectives (specific to this session)
+- Pre-class preparation for students
+- Opening activity (5-10 min)
+- Content delivery (lecture outline with key points)
+- Active learning activities (at least 2)
+- Assessment of learning (formative)
+- Closing synthesis (5-10 min)
+- Assignment connecting to next session
+- Required materials and technology
+- Accommodation considerations
+
+Teaching approach: Trauma-informed, inclusive, engaging
+Class format: [in-person/online/hybrid]
+                        </div>
+                    </div>
+
+                    <!-- Prompt 13 -->
+                    <div class="card prompt-card" data-role="faculty" data-tags="discussion prompts">
+                        <div class="card-header">
+                            <div class="card-title">Prompt 13: Discussion Questions</div>
+                            <span class="bookmark-icon" onclick="toggleBookmark(this, 'prompt-13')">⭐</span>
+                        </div>
+                        <div class="card-description">Thought-provoking questions for class engagement</div>
+                        <div class="card-badge">ChatGPT</div>
+                        <button class="btn btn-primary" onclick="showPrompt('p13')">View Prompt</button>
+                        <div id="p13" class="prompt-box">
+                            <button class="copy-btn" onclick="copyPrompt('p13')">Copy</button>
+Generate [number] discussion questions for [specific topic/reading/
+case study] in my [course name] for [student level].
+
+Questions should:
+- Progress from knowledge recall to critical analysis
+- Encourage multiple perspectives
+- Connect theory to practice in child advocacy
+- Promote ethical reasoning
+- Be open-ended (no single "right" answer)
+- Be trauma-informed and culturally sensitive
+- Encourage field experience connections
+
+Include:
+- Main discussion questions (whole class)
+- Small group discussion prompts
+- Optional: Online forum prompts for asynchronous discussion
+                        </div>
+                    </div>
+
+                    <!-- Prompt 14 -->
+                    <div class="card prompt-card" data-role="faculty" data-tags="assignments assessments">
+                        <div class="card-header">
+                            <div class="card-title">Prompt 14: Assignment Design</div>
+                            <span class="bookmark-icon" onclick="toggleBookmark(this, 'prompt-14')">⭐</span>
+                        </div>
+                        <div class="card-description">Create meaningful learning assessments</div>
+                        <div class="card-badge">Claude</div>
+                        <button class="btn btn-primary" onclick="showPrompt('p14')">View Prompt</button>
+                        <div id="p14" class="prompt-box">
+                            <button class="copy-btn" onclick="copyPrompt('p14')">Copy</button>
+Design a [assignment type: case analysis paper/research project/
+presentation/practicum assignment] for [course name] focused on 
+[specific learning objectives].
+
+Assignment should:
+- Assess [specific competencies]
+- Require [page length/duration/scope]
+- Integrate [theory and practice/research skills/clinical reasoning]
+- Be appropriate for [undergraduate/graduate] level
+
+Provide:
+1. Assignment description (student-facing)
+2. Learning objectives addressed
+3. Required components or sections
+4. Grading rubric (detailed criteria and points)
+5. Example topics or case options
+6. Submission guidelines
+7. Resources students should consult
+8. Common mistakes to avoid (instructor notes)
+
+Special considerations: [trauma-informed content, cultural competency]
+                        </div>
+                    </div>
+
+                    <!-- Prompt 15 -->
+                    <div class="card prompt-card" data-role="faculty" data-tags="exams tests">
+                        <div class="card-header">
+                            <div class="card-title">Prompt 15: Exam Question Development</div>
+                            <span class="bookmark-icon" onclick="toggleBookmark(this, 'prompt-15')">⭐</span>
+                        </div>
+                        <div class="card-description">Multiple question types for comprehensive testing</div>
+                        <div class="card-badge">ChatGPT</div>
+                        <button class="btn btn-primary" onclick="showPrompt('p15')">View Prompt</button>
+                        <div id="p15" class="prompt-box">
+                            <button class="copy-btn" onclick="copyPrompt('p15')">Copy</button>
+Create [number] exam questions for [course/unit] on [topic] at 
+[Bloom's taxonomy level: knowledge/comprehension/application/analysis].
+
+Question types needed:
+- Multiple choice: [number]
+- Short answer: [number]
+- Essay/extended response: [number]
+- Case-based questions: [number]
+
+For each question, provide:
+- The question
+- Correct answer (for multiple choice/short answer)
+- Answer key/grading criteria (for essay)
+- Justification for correct answer
+- Common misconceptions to anticipate
+
+Content focus: [specific topics or learning objectives]
+Difficulty level: [appropriate for exam type: quiz/midterm/final]
+                        </div>
+                    </div>
+
+                    <!-- Prompt 16 -->
+                    <div class="card prompt-card" data-role="faculty" data-tags="rubrics grading">
+                        <div class="card-header">
+                            <div class="card-title">Prompt 16: Rubric Development</div>
+                            <span class="bookmark-icon" onclick="toggleBookmark(this, 'prompt-16')">⭐</span>
+                        </div>
+                        <div class="card-description">Clear grading criteria for assignments</div>
+                        <div class="card-badge">ChatGPT</div>
+                        <button class="btn btn-primary" onclick="showPrompt('p16')">View Prompt</button>
+                        <div id="p16" class="prompt-box">
+                            <button class="copy-btn" onclick="copyPrompt('p16')">Copy</button>
+Create a detailed grading rubric for [assignment type] in [course name].
+
+Assessment criteria should include:
+- [List 5-8 specific dimensions: content knowledge, critical thinking, 
+  writing quality, trauma-informed approach, cultural competency, 
+  ethical reasoning, etc.]
+
+For each criterion, provide:
+- Levels: Excellent/Proficient/Developing/Unsatisfactory
+- Point values
+- Detailed descriptors for each level
+- Examples of what each level looks like
+
+Total points: [specify]
+Format: Table format, clear and usable for students and TAs
+                        </div>
+                    </div>
+
+                    <!-- Prompt 17 -->
+                    <div class="card prompt-card" data-role="faculty" data-tags="literature review research">
+                        <div class="card-header">
+                            <div class="card-title">Prompt 17: Literature Review Structure</div>
+                            <span class="bookmark-icon" onclick="toggleBookmark(this, 'prompt-17')">⭐</span>
+                        </div>
+                        <div class="card-description">Organization framework for research synthesis</div>
+                        <div class="card-badge">NotebookLM/Perplexity</div>
+                        <button class="btn btn-primary" onclick="showPrompt('p17')">View Prompt</button>
+                        <div id="p17" class="prompt-box">
+                            <button class="copy-btn" onclick="copyPrompt('p17')">Copy</button>
+I'm writing a literature review on [specific topic in child 
+maltreatment/trauma/advocacy]. 
+
+Help me:
+1. Identify 5-7 key themes or subtopics to organize the review
+2. Create an outline structure for the review
+3. Suggest transition sentences between sections
+4. Identify gaps in current research
+5. Frame implications for [practice/policy/future research]
+
+Context: This is for [journal article/dissertation/grant/course]
+Audience: [Academic researchers/practitioners/funders]
+                        </div>
+                    </div>
+
+                    <!-- Prompt 18 -->
+                    <div class="card prompt-card" data-role="faculty" data-tags="research questions">
+                        <div class="card-header">
+                            <div class="card-title">Prompt 18: Research Question Development</div>
+                            <span class="bookmark-icon" onclick="toggleBookmark(this, 'prompt-18')">⭐</span>
+                        </div>
+                        <div class="card-description">Frame research studies and investigations</div>
+                        <div class="card-badge">ChatGPT</div>
+                        <button class="btn btn-primary" onclick="showPrompt('p18')">View Prompt</button>
+                        <div id="p18" class="prompt-box">
+                            <button class="copy-btn" onclick="copyPrompt('p18')">Copy</button>
+Help me develop research questions for a study on [general topic: 
+trauma-informed practice effectiveness/CAC service delivery/forensic 
+interview techniques].
+
+Context:
+- Population: [children/caregivers/professionals/demographics]
+- Focus: [intervention/assessment/training/outcomes]
+- Methodology considering: [qualitative/quantitative/mixed]
+- Gap in literature: [briefly describe]
+
+Generate:
+- 3-5 potential primary research questions
+- Related sub-questions for each
+- Testable hypotheses (if quantitative)
+- Rationale for why each question is important
+- Methodological considerations
+
+Also suggest: theoretical frameworks and measurement approaches
+                        </div>
+                    </div>
+                </div>
+
+                <h3 style="margin-top: 3rem;">Section 3: For Administrators & Leaders (8 Prompts)</h3>
+                <div class="card-grid" id="admin-prompts">
+                    <!-- Prompt 21 -->
+                    <div class="card prompt-card" data-role="admin" data-tags="grants funding">
+                        <div class="card-header">
+                            <div class="card-title">Prompt 21: Grant Opportunity Research</div>
+                            <span class="bookmark-icon" onclick="toggleBookmark(this, 'prompt-21')">⭐</span>
+                        </div>
+                        <div class="card-description">Find relevant funding opportunities</div>
+                        <div class="card-badge">Perplexity</div>
+                        <button class="btn btn-primary" onclick="showPrompt('p21')">View Prompt</button>
+                        <div id="p21" class="prompt-box">
+                            <button class="copy-btn" onclick="copyPrompt('p21')">Copy</button>
+Find grant opportunities for [specific purpose: CAC operations/
+training programs/prevention initiatives/equipment/staff/facility/
+research projects] available in 2025-2026.
+
+Search criteria:
+- Eligible applicants: [501(c)(3)/government/educational/type]
+- Geographic focus: [national/regional/state-specific]
+- Funding range: [$amount minimum - $amount maximum]
+- Program focus: [child abuse prevention/victim services/MDT/
+  workforce development]
+
+For each opportunity, provide:
+- Funder name and program title
+- Funding amount range
+- Application deadline
+- Eligibility requirements
+- Priority areas or preferences
+- Website link for full RFP
+- Any matching requirements
+
+Prioritize: Most aligned with our mission and capacity
+                        </div>
+                    </div>
+
+                    <!-- Prompt 22 -->
+                    <div class="card prompt-card" data-role="admin" data-tags="grants proposals">
+                        <div class="card-header">
+                            <div class="card-title">Prompt 22: Grant Proposal Needs Statement</div>
+                            <span class="bookmark-icon" onclick="toggleBookmark(this, 'prompt-22')">⭐</span>
+                        </div>
+                        <div class="card-description">Compelling justification for funding</div>
+                        <div class="card-badge">ChatGPT/Claude</div>
+                        <button class="btn btn-primary" onclick="showPrompt('p22')">View Prompt</button>
+                        <div id="p22" class="prompt-box">
+                            <button class="copy-btn" onclick="copyPrompt('p22')">Copy</button>
+Write a compelling needs statement for a grant proposal seeking 
+funding for [specific project: expanded forensic interview services/
+prevention education/training initiative/facility upgrade].
+
+Our organization: [Brief description: type, location, served]
+Project goal: [What you want to accomplish]
+Population served: [Specific demographics and needs]
+
+Include:
+- Opening hook with relevant statistic or story
+- Local/regional data demonstrating need
+- Current gaps in services or resources
+- Specific population most affected
+- Consequences of not addressing this need
+- How this project addresses the identified gap
+- Alignment with funder priorities
+
+Length: [2-3 pages/500-750 words/as specified in RFP]
+Tone: Compelling but professional, data-driven, solution-focused
+Citations: Placeholder for statistics I'll verify
+                        </div>
+                    </div>
+
+                    <!-- Prompt 23 -->
+                    <div class="card prompt-card" data-role="admin" data-tags="logic model planning">
+                        <div class="card-header">
+                            <div class="card-title">Prompt 23: Logic Model Development</div>
+                            <span class="bookmark-icon" onclick="toggleBookmark(this, 'prompt-23')">⭐</span>
+                        </div>
+                        <div class="card-description">Program planning and evaluation framework</div>
+                        <div class="card-badge">ChatGPT</div>
+                        <button class="btn btn-primary" onclick="showPrompt('p23')">View Prompt</button>
+                        <div id="p23" class="prompt-box">
+                            <button class="copy-btn" onclick="copyPrompt('p23')">Copy</button>
+Create a logic model for [project name]: [brief description].
+
+Project components:
+- Target population: [specify]
+- Intervention/activities: [list main activities]
+- Duration: [timeframe]
+- Desired outcomes: [what you hope to achieve]
+
+Provide a logic model table with:
+- Inputs: Resources, partnerships, staff, funding
+- Activities: What the project will do
+- Outputs: Quantifiable deliverables
+- Outcomes: 
+  - Short-term (1-6 months)
+  - Medium-term (6-12 months)
+  - Long-term (1-3 years)
+- Impact: Ultimate change you seek
+
+Also provide:
+- 5-7 measurable indicators for tracking progress
+- Evaluation methods for each outcome level
+- Assumptions underlying the logic
+- External factors that could affect success
+                        </div>
+                    </div>
+
+                    <!-- Prompt 24 -->
+                    <div class="card prompt-card" data-role="admin" data-tags="budget grants">
+                        <div class="card-header">
+                            <div class="card-title">Prompt 24: Budget Narrative</div>
+                            <span class="bookmark-icon" onclick="toggleBookmark(this, 'prompt-24')">⭐</span>
+                        </div>
+                        <div class="card-description">Justification for grant expenses</div>
+                        <div class="card-badge">ChatGPT</div>
+                        <button class="btn btn-primary" onclick="showPrompt('p24')">View Prompt</button>
+                        <div id="p24" class="prompt-box">
+                            <button class="copy-btn" onclick="copyPrompt('p24')">Copy</button>
+Write a budget narrative justifying these expenses for [project name]:
+
+[Paste or list budget line items: Personnel, Equipment, Supplies, 
+Travel, Indirect costs, etc.]
+
+For each budget category, provide:
+- Clear justification for why this expense is necessary
+- Explanation of how costs were calculated
+- Connection to project activities and outcomes
+- Any cost-sharing or matching funds noted
+- Compliance with funder guidelines
+
+Tone: Clear, direct, demonstrates fiscal responsibility
+Length: [as specified by RFP, typically 1-2 pages]
+                        </div>
+                    </div>
+
+                    <!-- Prompt 25 -->
+                    <div class="card prompt-card" data-role="admin" data-tags="annual report impact">
+                        <div class="card-header">
+                            <div class="card-title">Prompt 25: Annual Report Narrative</div>
+                            <span class="bookmark-icon" onclick="toggleBookmark(this, 'prompt-25')">⭐</span>
+                        </div>
+                        <div class="card-description">Comprehensive year-end summary for stakeholders</div>
+                        <div class="card-badge">NotebookLM/ChatGPT</div>
+                        <button class="btn btn-primary" onclick="showPrompt('p25')">View Prompt</button>
+                        <div id="p25" class="prompt-box">
+                            <button class="copy-btn" onclick="copyPrompt('p25')">Copy</button>
+Write an executive summary for our [organization name] annual 
+report using this program data:
+
+[Paste statistics: children served, services provided, outcomes 
+achieved, partnerships developed, etc.]
+
+Create:
+1. Opening paragraph: Compelling summary of year's impact
+2. Program highlights: 3-5 key achievements with supporting data
+3. Outcome narrative: How services made a difference
+4. Challenges and solutions: Obstacles faced and addressed
+5. Looking forward: Preview of coming year's priorities
+6. Gratitude statement: Acknowledging supporters
+
+Audience: [Funders/Board/Community partners/Donors/Public]
+Tone: Professional, compelling, data-driven, grateful
+Length: [1-2 pages]
+
+Emphasize: Real impact on children, efficient resource use, 
+community collaboration
+                        </div>
+                    </div>
+
+                    <!-- Prompt 26 -->
+                    <div class="card prompt-card" data-role="admin" data-tags="data storytelling">
+                        <div class="card-header">
+                            <div class="card-title">Prompt 26: Data Storytelling</div>
+                            <span class="bookmark-icon" onclick="toggleBookmark(this, 'prompt-26')">⭐</span>
+                        </div>
+                        <div class="card-description">Transform statistics into compelling narratives</div>
+                        <div class="card-badge">ChatGPT</div>
+                        <button class="btn btn-primary" onclick="showPrompt('p26')">View Prompt</button>
+                        <div id="p26" class="prompt-box">
+                            <button class="copy-btn" onclick="copyPrompt('p26')">Copy</button>
+Transform these program statistics into a compelling narrative for 
+[presentation to board/report to funder/community communication]:
+
+Data:
+[Paste your numbers: services delivered, outcomes achieved, 
+demographic information, satisfaction scores, etc.]
+
+Create:
+- Opening statement contextualizing the numbers
+- 3-4 narrative paragraphs weaving data into story of impact
+- Comparison to previous year or benchmarks (if I provide)
+- Implications or "so what" statement - why this matters
+- Visual description (describe what charts would work best)
+
+Approach: Lead with impact, use data to support, connect numbers 
+to real change in children's lives
+                        </div>
+                    </div>
+
+                    <!-- Prompt 27 -->
+                    <div class="card prompt-card" data-role="admin" data-tags="strategic planning swot">
+                        <div class="card-header">
+                            <div class="card-title">Prompt 27: SWOT Analysis Framework</div>
+                            <span class="bookmark-icon" onclick="toggleBookmark(this, 'prompt-27')">⭐</span>
+                        </div>
+                        <div class="card-description">Strategic planning and organizational assessment</div>
+                        <div class="card-badge">ChatGPT</div>
+                        <button class="btn btn-primary" onclick="showPrompt('p27')">View Prompt</button>
+                        <div id="p27" class="prompt-box">
+                            <button class="copy-btn" onclick="copyPrompt('p27')">Copy</button>
+Create a SWOT analysis template for [organization type: CAC/
+prevention program/CAST program] strategic planning process.
+
+For each section (Strengths, Weaknesses, Opportunities, Threats):
+- 5-7 prompting questions to guide team's brainstorming
+- Categories to consider (e.g., for Strengths: staff expertise, 
+  community partnerships, funding, reputation, service quality)
+- Framework for prioritizing which factors are most critical
+
+Also include:
+- Instructions for conducting SWOT with board/staff
+- How to translate SWOT findings into strategic goals
+- Template for SWOT-to-strategy matrix
+
+This will be used in: [board retreat/strategic planning/grant]
+                        </div>
+                    </div>
+
+                    <!-- Prompt 28 -->
+                    <div class="card prompt-card" data-role="admin" data-tags="policy procedures">
+                        <div class="card-header">
+                            <div class="card-title">Prompt 28: Policy & Procedure Development</div>
+                            <span class="bookmark-icon" onclick="toggleBookmark(this, 'prompt-28')">⭐</span>
+                        </div>
+                        <div class="card-description">Organizational policies and protocols</div>
+                        <div class="card-badge">Claude</div>
+                        <button class="btn btn-primary" onclick="showPrompt('p28')">View Prompt</button>
+                        <div id="p28" class="prompt-box">
+                            <button class="copy-btn" onclick="copyPrompt('p28')">Copy</button>
+Draft a [policy/procedure] for [specific area: staff safety during 
+home visits/data security and confidentiality/volunteer management/
+trauma-informed organizational practices/cultural competency/
+mandatory reporting].
+
+Organization context: [type, size, services provided]
+
+Include:
+- Purpose and scope
+- Definitions of key terms
+- Policy statement (what we will do/not do)
+- Procedures (step-by-step how to implement)
+- Roles and responsibilities
+- Training requirements
+- Compliance and monitoring
+- Review and revision schedule
+- Related policies or procedures
+- Approval signature lines
+
+Format: Professional policy document
+Note: I will review for legal compliance and adapt to context
+                        </div>
+                    </div>
+                </div>
+
+                <h3 style="margin-top: 3rem;">Section 4: Cross-Cutting Prompts (10 Prompts)</h3>
+                <div class="card-grid" id="crosscutting-prompts">
+                    <!-- Prompt 31 -->
+                    <div class="card prompt-card" data-role="all" data-tags="research literature">
+                        <div class="card-header">
+                            <div class="card-title">Prompt 31: Finding Recent Research</div>
+                            <span class="bookmark-icon" onclick="toggleBookmark(this, 'prompt-31')">⭐</span>
+                        </div>
+                        <div class="card-description">Locate peer-reviewed articles and studies</div>
+                        <div class="card-badge">Perplexity</div>
+                        <button class="btn btn-primary" onclick="showPrompt('p31')">View Prompt</button>
+                        <div id="p31" class="prompt-box">
+                            <button class="copy-btn" onclick="copyPrompt('p31')">Copy</button>
+Find peer-reviewed research articles published in [2022-2025] on 
+[specific topic: trauma-informed practice effectiveness/forensic 
+interview protocols/prevention program outcomes/ACEs and resilience].
+
+Focus on:
+- Empirical studies (not just theoretical)
+- Relevant to [specific population or setting]
+- Accessible through academic databases
+
+For each article, provide:
+- Full citation
+- Brief summary (2-3 sentences on methods and key findings)
+- Relevance to [my specific work context]
+- Link or DOI
+
+Prioritize: Recent, high-quality research from reputable journals
+                        </div>
+                    </div>
+
+                    <!-- Prompt 32 -->
+                    <div class="card prompt-card" data-role="all" data-tags="research synthesis">
+                        <div class="card-header">
+                            <div class="card-title">Prompt 32: Research Synthesis</div>
+                            <span class="bookmark-icon" onclick="toggleBookmark(this, 'prompt-32')">⭐</span>
+                        </div>
+                        <div class="card-description">Combine insights from multiple sources</div>
+                        <div class="card-badge">NotebookLM/Claude</div>
+                        <button class="btn btn-primary" onclick="showPrompt('p32')">View Prompt</button>
+                        <div id="p32" class="prompt-box">
+                            <button class="copy-btn" onclick="copyPrompt('p32')">Copy</button>
+I've uploaded [number] research articles on [topic]. Please:
+
+1. Identify common themes across the articles
+2. Summarize key findings (what do we know about [topic]?)
+3. Note areas of disagreement or inconsistent findings
+4. Identify gaps (what still needs research?)
+5. Extract practical implications for [practitioners/educators/
+   policymakers]
+6. Create an annotated bibliography with key takeaways
+
+Format: Organized summary suitable for [literature review/training 
+handout/grant proposal background section]
+                        </div>
+                    </div>
+
+                    <!-- Prompt 33 -->
+                    <div class="card prompt-card" data-role="all" data-tags="presentations">
+                        <div class="card-header">
+                            <div class="card-title">Prompt 33: Conference Presentation Outline</div>
+                            <span class="bookmark-icon" onclick="toggleBookmark(this, 'prompt-33')">⭐</span>
+                        </div>
+                        <div class="card-description">Structure professional presentations effectively</div>
+                        <div class="card-badge">ChatGPT</div>
+                        <button class="btn btn-primary" onclick="showPrompt('p33')">View Prompt</button>
+                        <div id="p33" class="prompt-box">
+                            <button class="copy-btn" onclick="copyPrompt('p33')">Copy</button>
+Create an outline for a [15/30/45]-minute conference presentation 
+titled "[your title]" on [topic].
+
+Audience: [Conference attendees: researchers/practitioners/mixed/students]
+Setting: [Academic conference/professional training/community event]
+
+Include:
+- Opening (2-3 min): Hook and preview
+- Background (brief): Context and why this matters
+- Main content sections (3-5 key points with evidence)
+- Interactive elements (audience engagement strategies)
+- Practical applications or takeaways
+- Conclusion: Summary and call to action
+- Q&A preparation: Anticipate 5-7 likely questions with responses
+
+Also provide:
+- Slide suggestions (what should be on each slide)
+- Speaking notes for complex sections
+- Time allocation for each section
+                        </div>
+                    </div>
+
+                    <!-- Prompt 34 -->
+                    <div class="card prompt-card" data-role="all" data-tags="presentations slides">
+                        <div class="card-header">
+                            <div class="card-title">Prompt 34: PowerPoint Slide Content</div>
+                            <span class="bookmark-icon" onclick="toggleBookmark(this, 'prompt-34')">⭐</span>
+                        </div>
+                        <div class="card-description">Detailed content for presentation slides</div>
+                        <div class="card-badge">ChatGPT</div>
+                        <button class="btn btn-primary" onclick="showPrompt('p34')">View Prompt</button>
+                        <div id="p34" class="prompt-box">
+                            <button class="copy-btn" onclick="copyPrompt('p34')">Copy</button>
+Create content for PowerPoint slides for a presentation on [topic] 
+for [audience] lasting [duration].
+
+For each slide, provide:
+- Slide title
+- Bullet points (no more than 5 per slide, brief)
+- Speaker notes (what to say in detail)
+- Visual suggestions (what image/graph/graphic would enhance)
+
+Presentation structure:
+- Introduction (1-2 slides)
+- Main content ([number] slides)
+- Conclusion (1-2 slides)
+
+Total slides: [specify, typically 1 slide per 1-2 minutes]
+
+Style: Professional, not text-heavy, visually organized, accessible
+                        </div>
+                    </div>
+
+                    <!-- Prompt 35 -->
+                    <div class="card prompt-card" data-role="all" data-tags="resources guides">
+                        <div class="card-header">
+                            <div class="card-title">Prompt 35: Comprehensive Resource List</div>
+                            <span class="bookmark-icon" onclick="toggleBookmark(this, 'prompt-35')">⭐</span>
+                        </div>
+                        <div class="card-description">Curated lists of tools and materials</div>
+                        <div class="card-badge">ChatGPT</div>
+                        <button class="btn btn-primary" onclick="showPrompt('p35')">View Prompt</button>
+                        <div id="p35" class="prompt-box">
+                            <button class="copy-btn" onclick="copyPrompt('p35')">Copy</button>
+Create a comprehensive resource guide on [topic: trauma resources 
+for children/CAC services/mandated reporting/cultural competency/
+self-care for professionals] for [specific audience].
+
+Organize by categories:
+- National organizations
+- [State/regional] resources
+- Educational materials (books, articles, websites)
+- Training opportunities
+- Assessment tools or screening instruments
+- Crisis contacts
+- Support groups or peer networks
+- Funding sources
+- Online resources and databases
+
+For each resource, provide:
+- Name and description
+- Contact information (template for me to verify/complete)
+- Who it's for (population or professional type)
+- Cost (free vs. paid)
+- Notable features or why it's recommended
+
+Format: User-friendly handout, 2-4 pages, quick reference
+                        </div>
+                    </div>
+
+                    <!-- Prompt 36 -->
+                    <div class="card prompt-card" data-role="all" data-tags="faq documentation">
+                        <div class="card-header">
+                            <div class="card-title">Prompt 36: FAQ Document Development</div>
+                            <span class="bookmark-icon" onclick="toggleBookmark(this, 'prompt-36')">⭐</span>
+                        </div>
+                        <div class="card-description">Answer common questions comprehensively</div>
+                        <div class="card-badge">ChatGPT</div>
+                        <button class="btn btn-primary" onclick="showPrompt('p36')">View Prompt</button>
+                        <div id="p36" class="prompt-box">
+                            <button class="copy-btn" onclick="copyPrompt('p36')">Copy</button>
+Create a Frequently Asked Questions (FAQ) document about [topic: 
+our CAC services/forensic interview process/mandated reporting/
+trauma effects/therapy options/CAST program] for [audience: 
+families/professionals/students/community].
+
+Include:
+- 15-20 questions organized by theme
+- Clear, concise answers (2-4 sentences each)
+- Appropriate reading level for audience
+- Links or references to additional information
+- Contact information for follow-up questions
+
+Tone: [Reassuring/Professional/Educational/Accessible]
+Address common concerns: [list specific misconceptions to address]
+
+Make it: Easy to scan, answers actual questions, directs to 
+appropriate next steps
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- DECISION TREE SECTION -->
+        <div class="section" id="decision-tree">
+            <div class="section-header" onclick="toggleSection(this)">
+                <h2>🌳 Interactive Decision Tree: Which AI Tool Should I Use?</h2>
+                <span class="toggle-icon">▼</span>
+            </div>
+            <div class="section-content">
+                <div class="info-box">
+                    <strong>💡 How to Use:</strong> Answer the questions below to find the best AI tool for your specific task.
+                </div>
+
+                <div id="tree-container">
+                    <div class="tree-node" id="tree-start">
+                        <div class="tree-question">What do you need to do?</div>
+                        <div class="tree-options">
+                            <div class="tree-option" onclick="showTreeNode('search')">
+                                🔍 Search for information (grants, research, statistics)
+                            </div>
+                            <div class="tree-option" onclick="showTreeNode('analyze')">
+                                📄 Analyze documents I already have
+                            </div>
+                            <div class="tree-option" onclick="showTreeNode('create')">
+                                ✍️ Create new content (training, presentations, scenarios)
+                            </div>
+                            <div class="tree-option" onclick="showTreeNode('summarize')">
+                                📊 Summarize or analyze data
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ETHICS SECTION -->
+        <div class="section" id="ethics">
+            <div class="section-header" onclick="toggleSection(this)">
+                <h2>⚖️ Ethics & Best Practices Guide</h2>
+                <span class="toggle-icon">▼</span>
+            </div>
+            <div class="section-content">
+                <h3>The RED LINES - What to NEVER Put into AI</h3>
+                
+                <div class="warning-box" style="background: #FFE5E5; border-color: #DC3545;">
+                    <h4 style="color: #DC3545; margin-bottom: 1rem;">❌ Absolutely Prohibited Content</h4>
+                    <ul class="checklist" style="color: #721C24;">
+                        <li style="padding-left: 1.5rem;">Real victim/client identifying information (names, addresses, dates of birth)</li>
+                        <li style="padding-left: 1.5rem;">Actual case details or forensic interview content</li>
+                        <li style="padding-left: 1.5rem;">Confidential MDT case discussion notes</li>
+                        <li style="padding-left: 1.5rem;">Real photographs or evidence from cases</li>
+                        <li style="padding-left: 1.5rem;">FERPA-protected student records</li>
+                        <li style="padding-left: 1.5rem;">HIPAA-protected health information</li>
+                        <li style="padding-left: 1.5rem;">Sealed court records or grand jury materials</li>
+                    </ul>
+                </div>
+
+                <h3 style="margin-top: 2rem;">Why This Matters</h3>
+                <div class="quick-ref">
+                    <div class="quick-ref-item">
+                        <h4>Legal Obligations</h4>
+                        <p>FERPA, HIPAA, state confidentiality laws require protecting client information</p>
+                    </div>
+                    <div class="quick-ref-item">
+                        <h4>Ethical Duty</h4>
+                        <p>Professional codes for social workers, psychologists, attorneys mandate confidentiality</p>
+                    </div>
+                    <div class="quick-ref-item">
+                        <h4>Data Security</h4>
+                        <p>AI companies may use inputs for training; data may not be secure</p>
+                    </div>
+                    <div class="quick-ref-item">
+                        <h4>Harm Prevention</h4>
+                        <p>Protecting vulnerable children and families from privacy violations</p>
+                    </div>
+                </div>
+
+                <h3 style="margin-top: 2rem;">The GREEN ZONES - Appropriate AI Use</h3>
+                
+                <div class="success-box">
+                    <h4 style="color: #28A745; margin-bottom: 1rem;">✅ What IS Safe and Appropriate</h4>
+                    <ul class="checklist" style="color: #155724;">
+                        <li style="padding-left: 1.5rem;">Fictional scenarios and training materials</li>
+                        <li style="padding-left: 1.5rem;">Templates and frameworks (before adding real information)</li>
+                        <li style="padding-left: 1.5rem;">Administrative and educational content</li>
+                        <li style="padding-left: 1.5rem;">Research and literature synthesis</li>
+                        <li style="padding-left: 1.5rem;">Generic professional content</li>
+                    </ul>
+                </div>
+
+                <h3 style="margin-top: 2rem;">The De-identification Test</h3>
+                <div class="info-box">
+                    <p style="margin-bottom: 0.5rem;"><strong>Before using any case information, ask:</strong></p>
+                    <ol style="margin-left: 1.5rem; color: var(--text);">
+                        <li>Could this information identify a specific child or family?</li>
+                        <li>Could someone familiar with our community recognize who this is about?</li>
+                        <li>Am I comfortable with this information being stored on AI company servers?</li>
+                        <li>Have I removed ALL identifying details?</li>
+                    </ol>
+                    <p style="margin-top: 1rem; font-weight: 600; color: #DC3545;">If you answered "yes" to #1 or #2, or "no" to #3, DO NOT input it into AI.</p>
+                </div>
+
+                <h3 style="margin-top: 2rem;">Verification Requirements - Always Check</h3>
+                
+                <div class="card-grid">
+                    <div class="card">
+                        <div class="card-title" style="color: var(--primary);">Legal Information</div>
+                        <ul class="checklist">
+                            <li>State-specific mandated reporting laws</li>
+                            <li>Court procedures and requirements</li>
+                            <li>Evidence rules and statute of limitations</li>
+                            <li>Jurisdictional variations</li>
+                        </ul>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-title" style="color: var(--primary);">Statistical Data</div>
+                        <ul class="checklist">
+                            <li>Child maltreatment incidence rates</li>
+                            <li>Demographics of abuse victims</li>
+                            <li>Service utilization statistics</li>
+                            <li>Research findings and outcome data</li>
+                        </ul>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-title" style="color: var(--primary);">Clinical/Medical Info</div>
+                        <ul class="checklist">
+                            <li>Signs and symptoms of abuse</li>
+                            <li>Developmental milestones</li>
+                            <li>Treatment recommendations</li>
+                            <li>Trauma effects and responses</li>
+                        </ul>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-title" style="color: var(--primary);">Local Resources</div>
+                        <ul class="checklist">
+                            <li>Service availability and eligibility</li>
+                            <li>Contact information for agencies</li>
+                            <li>Program costs and requirements</li>
+                            <li>Current organizational policies</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <h3 style="margin-top: 2rem;">Quality Assurance Checklist</h3>
+                <div class="success-box">
+                    <p style="margin-bottom: 1rem;"><strong>Before using ANY AI-generated content:</strong></p>
+                    <ul class="checklist" style="color: #155724;">
+                        <li style="padding-left: 1.5rem;">All factual claims verified against authoritative sources</li>
+                        <li style="padding-left: 1.5rem;">Statistics checked and properly cited</li>
+                        <li style="padding-left: 1.5rem;">Legal information confirmed with current laws</li>
+                        <li style="padding-left: 1.5rem;">Language is trauma-informed and empowering</li>
+                        <li style="padding-left: 1.5rem;">Content is culturally competent and inclusive</li>
+                        <li style="padding-left: 1.5rem;">No identifying information included</li>
+                        <li style="padding-left: 1.5rem;">Original sources cited (not AI)</li>
+                    </ul>
+                </div>
+
+                <h3 style="margin-top: 2rem;">When NOT to Use AI</h3>
+                <div class="warning-box">
+                    <h4 style="color: #856404; margin-bottom: 1rem;">⚠️ Situations Where AI Is Inappropriate:</h4>
+                    <ul style="margin-left: 1.5rem; color: #856404;">
+                        <li><strong>Clinical Decision-Making:</strong> Determining if a child is safe, assessing risk levels, making treatment recommendations</li>
+                        <li><strong>Legal Decisions:</strong> Determining probable cause, deciding on charges, assessing evidence admissibility</li>
+                        <li><strong>Sensitive Communications:</strong> Disclosing abuse, communicating case outcomes, therapeutic interventions</li>
+                        <li><strong>Unique Professional Judgment:</strong> Complex ethical dilemmas, unusual circumstances, high-liability situations</li>
+                    </ul>
+                </div>
+
+                <div class="info-box" style="margin-top: 1.5rem;">
+                    <h4 style="margin-bottom: 0.5rem;">🔑 The "Human-in-the-Loop" Principle</h4>
+                    <p><strong>Always ask:</strong> "Is AI helping me do my work better, or is it doing the work for me?"</p>
+                    <p style="margin-top: 0.5rem;">If it's the latter, pause and reconsider.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- QUICK REFERENCE SECTION -->
+        <div class="section" id="reference">
+            <div class="section-header" onclick="toggleSection(this)">
+                <h2>📋 Quick Reference Card</h2>
+                <span class="toggle-icon">▼</span>
+            </div>
+            <div class="section-content">
+                <div class="info-box" style="background: #FFF3CD; border-color: #FFC107;">
+                    <h3 style="color: #856404; margin-bottom: 1rem;">🎯 5 Questions Before Using AI</h3>
+                    <ol style="margin-left: 1.5rem; color: #856404; line-height: 2;">
+                        <li><strong>Does this involve real people or confidential information?</strong><br>
+                        → If YES: Don't use AI</li>
+                        <li><strong>Will I verify all factual claims?</strong><br>
+                        → If NO: Don't use AI or commit to verifying</li>
+                        <li><strong>Have I reviewed for trauma-informed and culturally competent language?</strong><br>
+                        → If NO: Review before using</li>
+                        <li><strong>Am I using AI to enhance my expertise or replace it?</strong><br>
+                        → If REPLACE: Reconsider</li>
+                        <li><strong>Would I be comfortable if this AI input/output became public?</strong><br>
+                        → If NO: Don't input</li>
+                    </ol>
+                    <p style="margin-top: 1rem; font-weight: 600; font-size: 1.2rem; text-align: center;">When in doubt, leave it out.</p>
+                </div>
+
+                <h3 style="margin-top: 2rem;">Tool Selection Quick Guide</h3>
+                <div class="quick-ref">
+                    <div class="quick-ref-item" style="border-color: var(--primary);">
+                        <h4>Need to SEARCH?</h4>
+                        <p><strong>Use: Perplexity</strong></p>
+                        <p>Best for: Grants, research articles, statistics with sources</p>
+                    </div>
+
+                    <div class="quick-ref-item" style="border-color: var(--secondary);">
+                        <h4>Need to ANALYZE documents?</h4>
+                        <p><strong>Use: NotebookLM</strong></p>
+                        <p>Best for: Upload PDFs, get synthesis with citations</p>
+                    </div>
+
+                    <div class="quick-ref-item" style="border-color: var(--accent);">
+                        <h4>Need SHORT content?</h4>
+                        <p><strong>Use: ChatGPT</strong></p>
+                        <p>Best for: Quick drafts, outlines, under 2 pages</p>
+                    </div>
+
+                    <div class="quick-ref-item" style="border-color: #9775FA;">
+                        <h4>Need COMPLEX content?</h4>
+                        <p><strong>Use: Claude</strong></p>
+                        <p>Best for: Detailed scenarios, nuanced content, longer outputs</p>
+                    </div>
+
+                    <div class="quick-ref-item" style="border-color: #20C997;">
+                        <h4>Need DATA analysis?</h4>
+                        <p><strong>Use: Gemini or NotebookLM</strong></p>
+                        <p>Best for: Numbers, summaries, clear data visualization</p>
+                    </div>
+                </div>
+
+                <h3 style="margin-top: 2rem;">Troubleshooting Common Issues</h3>
+                <div class="card-grid">
+                    <div class="card">
+                        <div class="card-title" style="color: var(--primary);">Problem: Output isn't what I needed</div>
+                        <p><strong>Solution:</strong> Be more specific in your prompt. Add details about audience, length, tone, format. Include examples.</p>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-title" style="color: var(--primary);">Problem: Content seems generic</div>
+                        <p><strong>Solution:</strong> Add context to your prompt. Specify your community, organization type, populations served, relevant constraints.</p>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-title" style="color: var(--primary);">Problem: Don't know how to start</div>
+                        <p><strong>Solution:</strong> Use basic structure: "Create a [what] for [audience] about [topic]. Include: [elements]. Tone: [how it sounds]"</p>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-title" style="color: var(--primary);">Problem: AI included incorrect info</div>
+                        <p><strong>Solution:</strong> ALWAYS verify. Check statistics, legal requirements, clinical info. AI provides drafts; YOU provide accuracy.</p>
+                    </div>
+                </div>
+
+                <h3 style="margin-top: 2rem;">Implementation Checklist</h3>
+                <div class="success-box">
+                    <h4 style="color: #28A745; margin-bottom: 1rem;">✅ Getting Started Checklist</h4>
+                    <ul class="checklist" style="color: #155724;">
+                        <li style="padding-left: 1.5rem;">Choose one AI tool based on immediate need</li>
+                        <li style="padding-left: 1.5rem;">Create free account and explore interface</li>
+                        <li style="padding-left: 1.5rem;">Try one starter prompt from your role section</li>
+                        <li style="padding-left: 1.5rem;">Review and edit output with professional expertise</li>
+                        <li style="padding-left: 1.5rem;">Save successful prompts for future use</li>
+                        <li style="padding-left: 1.5rem;">Share results with colleagues</li>
+                        <li style="padding-left: 1.5rem;">Integrate into one regular workflow task</li>
+                        <li style="padding-left: 1.5rem;">Document what works and what needs adjustment</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script>
+        // Three.js Background Animation - Subtle Network Connections
+        let scene, camera, renderer, particles, connections;
+        
+        function initThreeJS() {
+            const container = document.getElementById('canvas-container');
+            scene = new THREE.Scene();
+            camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+            camera.position.z = 50;
+
+            renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            container.appendChild(renderer.domElement);
+
+            // Create particles
+            const particlesGeometry = new THREE.BufferGeometry();
+            const particlesCnt = 50;
+            const posArray = new Float32Array(particlesCnt * 3);
+
+            for(let i = 0; i < particlesCnt * 3; i++) {
+                posArray[i] = (Math.random() - 0.5) * 100;
+            }
+
+            particlesGeometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
+
+            const particlesMaterial = new THREE.PointsMaterial({
+                size: 0.3,
+                color: 0x4ECDC4,
+                transparent: true,
+                opacity: 0.6
+            });
+
+            particles = new THREE.Points(particlesGeometry, particlesMaterial);
+            scene.add(particles);
+
+            // Create connections
+            const connectionsMaterial = new THREE.LineBasicMaterial({
+                color: 0xFF6B6B,
+                transparent: true,
+                opacity: 0.1
+            });
+
+            const connectionsGeometry = new THREE.BufferGeometry();
+            const connectionPositions = [];
+
+            for(let i = 0; i < particlesCnt; i++) {
+                for(let j = i + 1; j < particlesCnt; j++) {
+                    if(Math.random() > 0.95) {
+                        connectionPositions.push(
+                            posArray[i * 3], posArray[i * 3 + 1], posArray[i * 3 + 2],
+                            posArray[j * 3], posArray[j * 3 + 1], posArray[j * 3 + 2]
+                        );
+                    }
+                }
+            }
+
+            connectionsGeometry.setAttribute('position', new THREE.Float32BufferAttribute(connectionPositions, 3));
+            connections = new THREE.LineSegments(connectionsGeometry, connectionsMaterial);
+            scene.add(connections);
+
+            animate();
+        }
+
+        function animate() {
+            requestAnimationFrame(animate);
+            particles.rotation.y += 0.0005;
+            particles.rotation.x += 0.0003;
+            connections.rotation.y += 0.0005;
+            connections.rotation.x += 0.0003;
+            renderer.render(scene, camera);
+        }
+
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        });
+
+        // Initialize Three.js
+        initThreeJS();
+
+        // Section Toggle
+        function toggleSection(header) {
+            const content = header.nextElementSibling;
+            header.classList.toggle('collapsed');
+            content.classList.toggle('collapsed');
+        }
+
+        // Show Prompt
+        function showPrompt(id) {
+            const promptBox = document.getElementById(id);
+            promptBox.classList.toggle('show');
+        }
+
+        // Copy Prompt
+        function copyPrompt(id) {
+            const promptBox = document.getElementById(id);
+            const text = promptBox.textContent.replace('Copy', '').trim();
+            
+            navigator.clipboard.writeText(text).then(() => {
+                const btn = promptBox.querySelector('.copy-btn');
+                const originalText = btn.textContent;
+                btn.textContent = '✓ Copied!';
+                btn.classList.add('copied');
+                
+                setTimeout(() => {
+                    btn.textContent = originalText;
+                    btn.classList.remove('copied');
+                }, 2000);
+            });
+        }
+
+        // Filter by Role
+        let currentFilter = 'all';
+        function filterByRole(role) {
+            currentFilter = role;
+            
+            // Update button states
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            // Filter cards
+            const cards = document.querySelectorAll('.prompt-card');
+            cards.forEach(card => {
+                const cardRole = card.getAttribute('data-role');
+                if (role === 'all' || cardRole === role || cardRole === 'all') {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+
+            // Filter quick start cards
+            const quickstartCards = document.querySelectorAll('#quickstart .card');
+            quickstartCards.forEach(card => {
+                const cardRole = card.getAttribute('data-role');
+                if (role === 'all' || cardRole === role || cardRole === 'all') {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+
+        // Search Functionality
+        document.getElementById('searchInput').addEventListener('input', function(e) {
+            const searchTerm = e.target.value.toLowerCase();
+            const cards = document.querySelectorAll('.prompt-card');
+            
+            cards.forEach(card => {
+                const title = card.querySelector('.card-title').textContent.toLowerCase();
+                const description = card.querySelector('.card-description')?.textContent.toLowerCase() || '';
+                const tags = card.getAttribute('data-tags') || '';
+                
+                if (title.includes(searchTerm) || description.includes(searchTerm) || tags.includes(searchTerm)) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        });
+
+        // Scroll to Section
+        function scrollToSection(sectionId) {
+            const section = document.getElementById(sectionId);
+            section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            
+            // Update nav button states
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+        }
+
+        // Bookmark Functionality
+        let bookmarks = JSON.parse(localStorage.getItem('castAIBookmarks') || '{}');
+
+        function toggleBookmark(element, id) {
+            if (bookmarks[id]) {
+                delete bookmarks[id];
+                element.classList.remove('bookmarked');
+            } else {
+                bookmarks[id] = true;
+                element.classList.add('bookmarked');
+            }
+            localStorage.setItem('castAIBookmarks', JSON.stringify(bookmarks));
+        }
+
+        // Initialize bookmarks
+        document.addEventListener('DOMContentLoaded', function() {
+            Object.keys(bookmarks).forEach(id => {
+                const elements = document.querySelectorAll(`[onclick*="${id}"]`);
+                elements.forEach(el => el.classList.add('bookmarked'));
+            });
+        });
+
+        // Decision Tree Logic
+        function showTreeNode(nodeType) {
+            const container = document.getElementById('tree-container');
+            let content = '';
+
+            if (nodeType === 'search') {
+                content = `
+                    <div class="tree-result">
+                        <h3>Recommended Tool: Perplexity</h3>
+                        <p style="font-size: 1.1rem; margin: 1rem 0;">Perplexity is your best choice for searching information because it provides cited sources and allows follow-up questions.</p>
+                        <h4 style="margin-top: 1.5rem;">Best For:</h4>
+                        <ul style="margin-left: 1.5rem; line-height: 1.8;">
+                            <li>Finding grant opportunities</li>
+                            <li>Locating research articles</li>
+                            <li>Getting current statistics with sources</li>
+                            <li>Verifying information</li>
+                        </ul>
+                        <button class="btn btn-primary" style="margin-top: 1.5rem;" onclick="showTreeNode('start')">Start Over</button>
+                    </div>
+                `;
+            } else if (nodeType === 'analyze') {
+                content = `
+                    <div class="tree-result">
+                        <h3>Recommended Tool: Google NotebookLM</h3>
+                        <p style="font-size: 1.1rem; margin: 1rem 0;">NotebookLM excels at analyzing documents you upload, providing synthesis with citations.</p>
+                        <h4 style="margin-top: 1.5rem;">Best For:</h4>
+                        <ul style="margin-left: 1.5rem; line-height: 1.8;">
+                            <li>Analyzing CAST Impact Reports</li>
+                            <li>Synthesizing research articles</li>
+                            <li>Creating literature reviews</li>
+                            <li>Preparing program reports</li>
+                        </ul>
+                        <button class="btn btn-primary" style="margin-top: 1.5rem;" onclick="showTreeNode('start')">Start Over</button>
+                    </div>
+                `;
+            } else if (nodeType === 'create') {
+                content = `
+                    <div class="tree-node">
+                        <div class="tree-question">What type of content?</div>
+                        <div class="tree-options">
+                            <div class="tree-option" onclick="showTreeNode('create-short')">
+                                📝 Short content (under 2 pages)
+                            </div>
+                            <div class="tree-option" onclick="showTreeNode('create-complex')">
+                                📚 Complex, detailed content
+                            </div>
+                        </div>
+                    </div>
+                `;
+            } else if (nodeType === 'create-short') {
+                content = `
+                    <div class="tree-result">
+                        <h3>Recommended Tool: ChatGPT</h3>
+                        <p style="font-size: 1.1rem; margin: 1rem 0;">ChatGPT is fast and versatile for quick drafts and shorter content.</p>
+                        <h4 style="margin-top: 1.5rem;">Best For:</h4>
+                        <ul style="margin-left: 1.5rem; line-height: 1.8;">
+                            <li>Training outlines and agendas</li>
+                            <li>Community presentation materials</li>
+                            <li>Discussion prompts</li>
+                            <li>Email templates</li>
+                        </ul>
+                        <button class="btn btn-primary" style="margin-top: 1.5rem;" onclick="showTreeNode('start')">Start Over</button>
+                    </div>
+                `;
+            } else if (nodeType === 'create-complex') {
+                content = `
+                    <div class="tree-result">
+                        <h3>Recommended Tool: Claude</h3>
+                        <p style="font-size: 1.1rem; margin: 1rem 0;">Claude handles nuance and complexity better, producing longer, more detailed outputs.</p>
+                        <h4 style="margin-top: 1.5rem;">Best For:</h4>
+                        <ul style="margin-left: 1.5rem; line-height: 1.8;">
+                            <li>Complex case scenarios</li>
+                            <li>Detailed protocols and procedures</li>
+                            <li>Comprehensive training materials</li>
+                            <li>Multi-layered assessments</li>
+                        </ul>
+                        <button class="btn btn-primary" style="margin-top: 1.5rem;" onclick="showTreeNode('start')">Start Over</button>
+                    </div>
+                `;
+            } else if (nodeType === 'summarize') {
+                content = `
+                    <div class="tree-result">
+                        <h3>Recommended Tools: Google Gemini or NotebookLM</h3>
+                        <p style="font-size: 1.1rem; margin: 1rem 0;">Both tools excel at data analysis and creating clear summaries.</p>
+                        <h4 style="margin-top: 1.5rem;">Best For:</h4>
+                        <ul style="margin-left: 1.5rem; line-height: 1.8;">
+                            <li>Analyzing program statistics</li>
+                            <li>Creating data narratives</li>
+                            <li>Impact report summaries</li>
+                            <li>Synthesizing survey results</li>
+                        </ul>
+                        <button class="btn btn-primary" style="margin-top: 1.5rem;" onclick="showTreeNode('start')">Start Over</button>
+                    </div>
+                `;
+            } else {
+                content = `
+                    <div class="tree-node" id="tree-start">
+                        <div class="tree-question">What do you need to do?</div>
+                        <div class="tree-options">
+                            <div class="tree-option" onclick="showTreeNode('search')">
+                                🔍 Search for information (grants, research, statistics)
+                            </div>
+                            <div class="tree-option" onclick="showTreeNode('analyze')">
+                                📄 Analyze documents I already have
+                            </div>
+                            <div class="tree-option" onclick="showTreeNode('create')">
+                                ✍️ Create new content (training, presentations, scenarios)
+                            </div>
+                            <div class="tree-option" onclick="showTreeNode('summarize')">
+                                📊 Summarize or analyze data
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }
+
+            container.innerHTML = content;
+        }
+ <!-- Footer -->
+    <footer class="bg-primary text-white py-8 px-4">
+        <div class="max-w-4xl mx-auto text-center">
+            <div class="mb-6">
+                <h3 class="text-xl font-semibold mb-4">Thank you, Bhavani Kola</h3>
+                <p class="text-lg mb-2">CEO & Founder | EclaTech Solutions</p>
+                <p class="text-sm opacity-90 mb-4">AI Education Leader | Keynote Speaker | Adaptive AI Consultant</p>
+                <p class="text-sm opacity-75 mb-6">Leading the Charge: Closing the AI Literacy Gap, One Organization at a Time</p>
+                
+                <div class="flex justify-center space-x-6 mb-6">
+                    <a href="https://www.linkedin.com/in/bhavanikola/" target="_blank" class="bg-accent hover:bg-blue-600 px-6 py-3 rounded-lg font-medium transition-all duration-300 flex items-center">
+                        <i class="fab fa-linkedin mr-2"></i>
+                        Connect on LinkedIn for AI Updates
+                    </a>
+                    <a href="https://www.youtube.com/@BhavaniKola" target="_blank" class="bg-rust hover:bg-red-700 px-6 py-3 rounded-lg font-medium transition-all duration-300 flex items-center">
+                        <i class="fab fa-youtube mr-2"></i>
+                        Follow for AI Videos
+                    </a>
+                </div>
+                
+                <div class="mb-6">
+                    <a href="https://bhavanikola2023.github.io/eclatechbrochure/#home" target="_blank" class="inline-flex items-center bg-gradient-to-r from-orange to-yellow text-white px-6 py-3 rounded-lg font-semibold hover:shadow-lg transition-all duration-300">
+                       <i class="fas fa-microphone text-2xl text-white-500 mb-2"></i>
+
+                        Speaking Services 
+                        <i class="fas fa-external-link-alt ml-2"></i>
+                    </a>
+                </div>
+            </div>
+            
+            <div class="border-t border-blue-600 pt-6">
+                <p class="text-sm opacity-75 mb-2">
+                    © 2025 ECLATECH SOLUTIONS LLC. All rights reserved.
+                </p>
+                <p class="text-xs opacity-60">
+                    
+                </p>
+            </div>
+        </div>
+    </footer>
+        // Print Functionality
+        window.addEventListener('beforeprint', () => {
+            document.querySelectorAll('.section-content').forEach(content => {
+                content.classList.remove('collapsed');
+            });
+        });
+    </script>
+</body>
+</html>
